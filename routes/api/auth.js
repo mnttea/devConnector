@@ -56,10 +56,15 @@ router.post(
 				}
 			};
 
-			jwt.sign(payload, config.get('jwtSecret'), { expiresIn: 3600000 }, (err, token) => {
-				if (err) throw err;
-				res.json({ token });
-			});
+			jwt.sign(
+				payload,
+				config.get('jwtSecret'),
+				{ expiresIn: 3600000 },
+				(err, token) => {
+					if (err) throw err;
+					res.json({ token });
+				}
+			);
 		} catch (err) {
 			if (err) {
 				console.error(err.message);

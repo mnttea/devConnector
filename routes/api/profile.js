@@ -5,6 +5,8 @@ const { check, validationResult } = require('express-validator');
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
 const { route } = require('./auth');
+const config = require('config');
+const axios = require('axios');
 
 // @route           GET api/profile/me
 // @description     GET current user's profile
@@ -70,7 +72,7 @@ router.post(
 		if (status) profileFields.status = status;
 		if (githubusername) profileFields.githubusername = githubusername;
 		if (skills) {
-			profileFields.skills = skills.split(',').map((skill) => skill.trim());
+			profileFields.skills = skills.split(',').map(skill => skill.trim());
 		}
 		// Build social object
 		profileFields.social = {};
@@ -209,9 +211,7 @@ router.delete('/experience/:exp_id', auth, async (req, res) => {
 		const profile = await Profile.findOne({ user: req.user.id });
 
 		// Get remove index
-		const removeIndex = profile.experience
-			.map((item) => item.id)
-			.indexOf(req.params.exp_id);
+		const removeIndex = profile.experience.map(item => item.id).indexOf(req.params.exp_id);
 
 		profile.experience.splice(removeIndex, 1);
 		await profile.save();
@@ -275,9 +275,7 @@ router.delete('/education/:edu_id', auth, async (req, res) => {
 		const profile = await Profile.findOne({ user: req.user.id });
 
 		// Get remove index
-		const removeIndex = profile.education
-			.map((item) => item.id)
-			.indexOf(req.params.edu_id);
+		const removeIndex = profile.education.map(item => item.id).indexOf(req.params.edu_id);
 
 		profile.education.splice(removeIndex, 1);
 		await profile.save();
@@ -285,6 +283,27 @@ router.delete('/education/:edu_id', auth, async (req, res) => {
 	} catch (err) {
 		console.log(err.message);
 		res.status(500).send('Server Error');
+	}
+});
+
+// @route GET api/profile/github/:username
+// @desc  Get user repos from Github
+// @access Public
+
+router.get('/github/:username', async (req, res) => {
+	try {
+		const uri = encodeURI(
+			`https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc`
+		);
+		const headers = {
+			'user-agent': 'node.js',
+			Authorization: `token ${config.get('githubToken')}`
+		};
+		const githubResponse = await axios.get(uri, { headers });
+		return res.json(githubResponse.data);
+	} catch (err) {
+		console.log(err.message);
+		res.status(404).send('No Github profile found');
 	}
 });
 module.exports = router;
