@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Landing from '../layout/Landing';
 import Register from '../auth/Register';
 import Login from '../auth/Login';
 import Alert from '../layout/Alert';
@@ -14,13 +13,13 @@ import AddEducation from '../profile-forms/AddEducation';
 import Posts from '../posts/Posts';
 import Post from '../post/Post';
 import PrivateRoute from './PrivateRoute';
+import NotFound from '../layout/NotFound';
 
 const Routes = props => {
 	return (
-		<Switch>
-			<Route exact path='/' component={Landing} />
-			<section className='container'>
-				<Alert />
+		<section className='container'>
+			<Alert />
+			<Switch>
 				<Route exact path='/register' component={Register} />
 				<Route exact path='/login' component={Login} />
 				<Route exact path='/profiles' component={Profiles} />
@@ -32,8 +31,9 @@ const Routes = props => {
 				<PrivateRoute exact path='/add-education' component={AddEducation} />
 				<PrivateRoute exact path='/posts' component={Posts} />
 				<PrivateRoute exact path='/posts/:id' component={Post} />
-			</section>
-		</Switch>
+				<Route component={NotFound} />
+			</Switch>
+		</section>
 	);
 };
 
