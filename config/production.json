@@ -1,0 +1,5 @@
+{
+	"mongoURI": "mongodb+srv://rodney:rodney@devconnector.sgq4c.mongodb.net/<dbname>?retryWrites=true&w=majority",
+	"jwtSecret": "mysecrettoken",
+	"githubToken": "757ee4d30128f73db48c391025ebea76ac520fd3"
+}
