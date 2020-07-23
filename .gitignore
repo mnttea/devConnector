@@ -1,6 +1,5 @@
 #config files
 config/default.json
-config/production.json
 node_modules
 client/node_modules
 .prettierrc
