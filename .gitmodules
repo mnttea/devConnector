@@ -1,3 +1,0 @@
-[submodule "devConnector.server\\"]
-	path = devConnector.server\\
-	url = https://git.heroku.com/devconnector-server.git
