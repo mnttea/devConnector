@@ -5,7 +5,6 @@ const { check, validationResult } = require('express-validator');
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
 const { route } = require('./auth');
-const config = require('config');
 const axios = require('axios');
 const Post = require('../../models/Post');
 
@@ -299,7 +298,7 @@ router.get('/github/:username', async (req, res) => {
 		);
 		const headers = {
 			'user-agent': 'node.js',
-			Authorization: `token ${config.get('githubToken')}`
+			Authorization: `token ${process.env.GITHUBTOKEN}`
 		};
 		const githubResponse = await axios.get(uri, { headers });
 		return res.json(githubResponse.data);

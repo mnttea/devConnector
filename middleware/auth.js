@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const config = require('config');
 
 // middleware function has access to request response objects.
 // callback to move on to next piece
@@ -15,7 +14,7 @@ module.exports = function (req, res, next) {
 
 	// verify token
 	try {
-		const decoded = jwt.verify(token, config.get('jwtSecret'));
+		const decoded = jwt.verify(token, process.env.JWTSECRET);
 		req.user = decoded.user;
 		next();
 	} catch (err) {

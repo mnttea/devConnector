@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import { setAlert } from '../../actions/alert';
@@ -13,16 +13,38 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 		password: '',
 		password2: ''
 	});
-
 	const { name, email, password, password2 } = formData;
 
-	const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+	useEffect(() => {
+		//TODO: document this later
+		window.onloadCallback = () => {
+			window.grecaptcha.render('grecaptcha', {
+				sitekey: '6LfbrbwZAAAAAFc3enaOhlTYyl8OaxgOdzGW5YFZ'
+			});
+		};
+
+		const script = document.createElement('script');
+		script.src =
+			'https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit';
+		script.async = true;
+		script.defer = true;
+		document.body.appendChild(script);
+	}, []);
+
+	const onChange = e => {
+		setFormData({ ...formData, [e.target.name]: e.target.value });
+	};
 	const onSubmit = async e => {
 		e.preventDefault();
 		if (password !== password2) {
 			setAlert('Passwords do not match', 'danger', 3000);
 		} else {
-			register({ name, email, password });
+			register({
+				name,
+				email,
+				password,
+				grecaptchaToken: window.grecaptcha.getResponse()
+			});
 		}
 	};
 
@@ -78,6 +100,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 						onChange={e => onChange(e)}
 					/>
 				</div>
+				<div id='grecaptcha'></div>
 				<input type='submit' className='btn btn-primary' value='Register' />
 			</form>
 			<p className='my-1'>

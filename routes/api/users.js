@@ -1,14 +1,13 @@
 const express = require('express');
 const router = express.Router();
+const grecaptcha = require('../../middleware/grecaptcha');
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const config = require('config');
 const { check, validationResult } = require('express-validator');
 
 // User Model
 const User = require('../../models/User');
-const { debug } = require('request');
 
 // @route           GET api/users
 // @description     Register user
@@ -22,6 +21,7 @@ router.post(
 			min: 6
 		})
 	],
+	grecaptcha,
 	async (req, res) => {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
@@ -35,7 +35,7 @@ router.post(
 			let user = await User.findOne({ email });
 			if (user) {
 				return res.status(400).json({
-					errors: [{ msg: 'User already exists' }]
+					errors: { msg: 'User already exists' }
 				});
 			}
 
@@ -67,15 +67,10 @@ router.post(
 				}
 			};
 
-			jwt.sign(
-				payload,
-				config.get('jwtSecret'),
-				{ expiresIn: 3600000 },
-				(err, token) => {
-					if (err) throw err;
-					res.json({ token });
-				}
-			);
+			jwt.sign(payload, process.env.JWTSECRET, { expiresIn: 3600000 }, (err, token) => {
+				if (err) throw err;
+				res.json({ token });
+			});
 		} catch (err) {
 			console.error(err.message);
 			res.status(500).send('Server error');
