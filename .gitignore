@@ -1,6 +1,8 @@
-#config files
-config/default.json
-node_modules
-client/node_modules
-.prettierrc
-.env
+#env
+*.env
+
+#prettier
+*.prettierrc
+
+#node_modules
+*node_modules
