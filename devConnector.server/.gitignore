@@ -1,0 +1,8 @@
+#env
+*.env
+
+#prettier
+*.prettierrc
+
+#node_modules
+*node_modules
