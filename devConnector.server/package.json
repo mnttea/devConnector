@@ -5,25 +5,28 @@
 	"main": "server.js",
 	"scripts": {
 		"start": "node server",
+		"client": "npm start --prefix ../devConnector.client",
 		"server": "nodemon server",
-		"build": "npm run server"
+		"dev": "concurrently \"npm run client\" \"npm run server\""
 	},
 	"author": "timamaa",
 	"license": "MIT",
 	"dependencies": {
 		"axios": "^0.19.2",
 		"bcryptjs": "^2.4.3",
+		"cors": "^2.8.5",
 		"dotenv": "^8.2.0",
 		"express": "^4.17.1",
 		"express-validator": "^6.6.0",
 		"gravatar": "^1.8.0",
 		"jsonwebtoken": "^8.5.1",
 		"mongoose": "^5.9.21",
+		"normalize-url": "^5.1.0",
 		"query-string": "^6.13.1",
 		"request": "^2.88.2"
 	},
 	"devDependencies": {
-		"concurrently": "^5.2.0",
+		"concurrently": "^5.3.0",
 		"nodemon": "^2.0.4"
 	}
 }

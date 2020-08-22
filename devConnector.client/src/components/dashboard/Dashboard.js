@@ -8,12 +8,7 @@ import DashboardActions from './DashboardActions';
 import Experience from './Experience';
 import Education from './Education';
 
-const Dashboard = ({
-	getCurrentProfile,
-	deleteAccount,
-	auth: { user },
-	profile: { profile, loading }
-}) => {
+const Dashboard = ({ getCurrentProfile, deleteAccount, auth: { user }, profile: { profile, loading } }) => {
 	useEffect(() => {
 		getCurrentProfile();
 	}, [getCurrentProfile]);
@@ -39,7 +34,7 @@ const Dashboard = ({
 			) : (
 				<>
 					<p>You have not yet setup a profile, please add some info</p>
-					<Link to='/create-profile' className='btn btn-primary my-1'>
+					<Link to='/profile-form' className='btn btn-primary my-1'>
 						Create Profile
 					</Link>
 				</>

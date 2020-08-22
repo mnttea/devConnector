@@ -1,3 +1,4 @@
+const cors = require('cors');
 const express = require('express');
 const connectDB = require('./config/db');
 const path = require('path');
@@ -6,6 +7,12 @@ require('dotenv').config();
 
 // Connect Database
 connectDB();
+
+const corsOptions = {
+	origin: 'https://devconnector-server.herokuapp.com/'
+};
+app.use(cors());
+app.options('*', cors(corsOptions));
 
 // init middleware
 app.use(express.json({ extended: false }));

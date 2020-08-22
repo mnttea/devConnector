@@ -33,33 +33,13 @@ const AddEducation = ({ addEducation, history }) => {
 			<small>* = required field</small>
 			<form className='form' onSubmit={e => onSubmit(e)}>
 				<div className='form-group'>
-					<input
-						type='text'
-						placeholder='* School or Bootcamp'
-						name='school'
-						value={school}
-						onChange={e => onChange(e)}
-						required
-					/>
+					<input type='text' placeholder='* School or Bootcamp' name='school' value={school} onChange={e => onChange(e)} required />
 				</div>
 				<div className='form-group'>
-					<input
-						type='text'
-						placeholder='* Degree or Certificate'
-						name='degree'
-						value={degree}
-						onChange={e => onChange(e)}
-						required
-					/>
+					<input type='text' placeholder='* Degree or Certificate' name='degree' value={degree} onChange={e => onChange(e)} required />
 				</div>
 				<div className='form-group'>
-					<input
-						type='text'
-						placeholder='Field of Study'
-						name='fieldofstudy'
-						value={fieldofstudy}
-						onChange={e => onChange(e)}
-					/>
+					<input type='text' placeholder='Field of Study' name='fieldofstudy' value={fieldofstudy} onChange={e => onChange(e)} />
 				</div>
 				<div className='form-group'>
 					<h4>From Date</h4>
@@ -82,13 +62,7 @@ const AddEducation = ({ addEducation, history }) => {
 				</div>
 				<div className='form-group'>
 					<h4>To Date</h4>
-					<input
-						type='date'
-						name='to'
-						value={to}
-						onChange={e => onChange(e)}
-						disabled={toDateDisabled ? 'disabled' : ''}
-					/>
+					<input type='date' name='to' value={to} onChange={e => onChange(e)} disabled={toDateDisabled ? 'disabled' : ''} />
 				</div>
 				<div className='form-group'>
 					<textarea

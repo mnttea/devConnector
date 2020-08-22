@@ -4,6 +4,7 @@ const grecaptcha = require('../../middleware/grecaptcha');
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const normalize = require('normalize-url');
 const { check, validationResult } = require('express-validator');
 
 // User Model
@@ -40,11 +41,14 @@ router.post(
 			}
 
 			// get users gravatar
-			const avatar = gravatar.url(email, {
-				s: '200',
-				r: 'pg',
-				d: 'mm'
-			});
+			const avatar = normalize(
+				gravatar.url(email, {
+					s: '200',
+					r: 'pg',
+					d: 'mm'
+				}),
+				{ forceHttps: true }
+			);
 
 			// encrypt password (should be a hash)
 
